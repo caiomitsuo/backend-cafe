@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cafe_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cafe_db
+      POSTGRES_USER: cafe_user
+      POSTGRES_PASSWORD: cafe_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cafe_network
+
+volumes:
+  postgres_data:
+
+networks:
+  cafe_network:
+    driver: bridge

@@ -1,0 +1,76 @@
+  
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@map("users")
+}
+
+model Category {
+  id            String @id @default(cuid())
+  name          String
+  slug          String @unique
+  description   String?
+  createdAt     DateTime @default(now())
+  
+  subcategories Subcategory[]
+  
+  @@map("categories")
+}
+
+model Subcategory {
+  id               String @id @default(cuid())
+  name             String
+  slug             String @unique
+  description      String?
+  heroImageUrl     String? @map("hero_image_url")
+  heroTitle        String? @map("hero_title")
+  heroDescription  String? @map("hero_description")
+  
+  categoryId       String @map("category_id")
+  category         Category @relation(fields: [categoryId], references: [id])
+  products         Product[]
+  
+  createdAt        DateTime @default(now()) @map("created_at")
+  
+  @@map("subcategories")
+}
+
+model Product {
+  id                  String @id @default(cuid())
+  name                String
+  slug                String @unique
+  description         String?
+  price               Decimal?
+  mainImageUrl        String? @map("main_image_url")
+  galleryImages       Json? @map("gallery_images")
+  
+  intensityLevel      Int? @map("intensity_level")
+  roastLevel          Int? @map("roast_level")
+  grindLevel          Int? @map("grind_level")
+  preparationMethods  Json? @map("preparation_methods")
+  
+  subcategoryId       String @map("subcategory_id")
+  subcategory         Subcategory @relation(fields: [subcategoryId], references: [id])
+  
+  active              Boolean @default(true)
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  @@map("products")
+}
