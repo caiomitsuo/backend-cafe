@@ -9,7 +9,6 @@ CREATE TABLE "categories" (
     CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
 CREATE TABLE "subcategories" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -24,7 +23,6 @@ CREATE TABLE "subcategories" (
     CONSTRAINT "subcategories_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
 CREATE TABLE "products" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,

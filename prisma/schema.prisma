@@ -56,14 +56,12 @@ model Product {
   name                String
   slug                String @unique
   description         String?
-  price               Decimal?
   mainImageUrl        String? @map("main_image_url")
   galleryImages       Json? @map("gallery_images")
   
   intensityLevel      Int? @map("intensity_level")
   roastLevel          Int? @map("roast_level")
   grindLevel          Int? @map("grind_level")
-  preparationMethods  Json? @map("preparation_methods")
   
   subcategoryId       String @map("subcategory_id")
   subcategory         Subcategory @relation(fields: [subcategoryId], references: [id])

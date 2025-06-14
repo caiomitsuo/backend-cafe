@@ -3,6 +3,8 @@ import cors from '@fastify/cors'
 import multipart from '@fastify/multipart'
 import { config } from 'dotenv'
 import { authRoutes } from './routes/auth.routes'
+import { productRoutes } from './routes/product.routes'
+import { uploadRoutes } from './routes/upload.routes'
 config()
 
 const fastify = Fastify({ 
@@ -17,7 +19,8 @@ fastify.register(cors, {
 fastify.register(multipart)
 
 fastify.register(authRoutes, { prefix: '/api/auth' })
-
+fastify.register(productRoutes, { prefix: '/api/products' })
+fastify.register(uploadRoutes, { prefix: '/api/upload' })
 fastify.get('/health', async () => {
   return { status: 'OK', timestamp: new Date().toISOString() }
 })
